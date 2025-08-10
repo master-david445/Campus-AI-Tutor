@@ -13,5 +13,6 @@ document.getElementById("askBtn").addEventListener("click", async () => {
   });
 
   const data = await res.json();
-  document.getElementById("answer").innerHTML = data.answer;
+  document.getElementById("answer").innerHTML = 
+    (data.cached ? "(From history) " : "") + data.answer;
 });
