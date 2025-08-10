@@ -1,51 +1,46 @@
-import fetch from "node-fetch";
-import { createClient } from "@supabase/supabase-js";
+const fetch = require("node-fetch");
+const { createClient } = require("@supabase/supabase-js");
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
 
-export async function handler(event) {
+exports.handler = async function (event) {
   try {
-    const { question } = JSON.parse(event.body);
-
-    if (!question || question.trim().length === 0) {
+    const { question } = JSON.parse(event.body || "{}");
+    if (!question) {
       return {
         statusCode: 400,
         body: JSON.stringify({ error: "No question provided" }),
       };
     }
 
-    // 1️⃣ Check Supabase for similar question (case-insensitive match)
-    const { data: matches, error: matchError } = await supabase
+    // 1. Check Supabase for a similar question
+    const { data: existing, error: dbError } = await supabase
       .from("questions")
       .select("*")
       .ilike("question", `%${question}%`)
-      .order("created_at", { ascending: false })
       .limit(1);
 
-    if (matchError) {
-      console.error("Supabase match error:", matchError);
-    }
+    if (dbError) throw dbError;
 
-    if (matches && matches.length > 0) {
+    if (existing && existing.length > 0) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          answer: matches[0].answer,
+          answer: existing[0].answer,
           source: "database",
         }),
       };
     }
 
-    // 2️⃣ Ask Gemini API but restrict to school/course-related knowledge
+    // 2. Ask Gemini API (only for school/course topics)
     const prompt = `
-      You are a campus AI tutor. Only answer questions related to school, university, courses, 
-      academic subjects, campus life, or study tips. If the question is unrelated, say 
-      "I can only answer school-related questions."
-
-      Question: ${question}
+    You are CampusTutorAI, an assistant that only answers questions related to school, academics, and course topics.
+    If the question is unrelated to these, respond with: "I can only help with school-related questions."
+    
+    Question: ${question}
     `;
 
     const geminiRes = await fetch(
@@ -60,71 +55,28 @@ export async function handler(event) {
       }
     );
 
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      console.error("Gemini API error:", errText);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "Gemini API call failed" }),
-      };
-    }
-
     const geminiData = await geminiRes.json();
-    console.log("Gemini response:", JSON.stringify(geminiData, null, 2));
 
-    let answer = "Sorry, I couldn't find an answer.";
-    if (geminiData?.candidates?.length > 0) {
-      const parts = geminiData.candidates[0]?.content?.parts;
-      if (parts?.length > 0 && parts[0].text) {
-        answer = parts[0].text;
-      }
-    }
+    let answer =
+      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Sorry, I couldn't find an answer.";
 
-    // 3️⃣ Store Q&A in Supabase
+    // 3. Save new Q&A to Supabase
     const { error: insertError } = await supabase
       .from("questions")
       .insert([{ question, answer }]);
 
-    if (insertError) {
-      console.error("Supabase insert error:", insertError);
-    }
+    if (insertError) throw insertError;
 
     return {
       statusCode: 200,
       body: JSON.stringify({ answer, source: "gemini" }),
     };
-  } catch (err) {
-    console.error("Function error:", err);
+  } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Server error" }),
+      body: JSON.stringify({ error: error.message }),
     };
   }
-}    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-      }),
-    }
-  );
-
-  const geminiData = await geminiRes.json();
-  console.log("Gemini response:", JSON.stringify(geminiData, null, 2));
-
-  let answer = "Sorry, I couldn't find an answer.";
-  if (geminiData?.candidates?.length > 0) {
-    const parts = geminiData.candidates[0]?.content?.parts;
-    if (parts?.length > 0 && parts[0].text) {
-      answer = parts[0].text;
-    }
-  }
-
-  // Save to DB
-  await supabase.from("questions").insert([{ question, answer }]);
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ answer, source: "ai" }),
-  };
-}
+};
