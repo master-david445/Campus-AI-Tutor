@@ -42,8 +42,18 @@ export async function handler(event) {
       })
     });
 
-    const geminiData = await geminiRes.json();
-    const answer = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't find an answer.";
+    // After gemini API call:
+const geminiData = await geminiRes.json();
+console.log("Gemini response:", JSON.stringify(geminiData, null, 2)); // <- See logs in Netlify
+
+// Safely get text
+let answer = "Sorry, I couldn't find an answer.";
+if (geminiData?.candidates?.length > 0) {
+  const parts = geminiData.candidates[0]?.content?.parts;
+  if (parts?.length > 0 && parts[0].text) {
+    answer = parts[0].text;
+  }
+}
 
     // Step 4: Save to Supabase
     await supabase.from("questions").insert([{ question, answer }]);
