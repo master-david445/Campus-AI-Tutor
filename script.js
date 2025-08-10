@@ -1,18 +1,39 @@
-document.getElementById("askBtn").addEventListener("click", async () => {
-  const question = document.getElementById("question").value;
-  if (!question.trim()) {
-    alert("Please enter a question");
+document.getElementById("askBtn").addEventListener("click", askQuestion);
+
+async function askQuestion() {
+  const question = document.getElementById("question").value.trim();
+  const answerBox = document.getElementById("answer");
+  
+  if (!question) {
+    answerBox.innerHTML = "Please type a question.";
     return;
   }
 
-  document.getElementById("answer").innerHTML = "Thinking...";
+  answerBox.innerHTML = "Thinking...";
 
-  const res = await fetch("/.netlify/functions/ask-ai", {
-    method: "POST",
-    body: JSON.stringify({ question }),
-  });
+  try {
+    const res = await fetch("/.netlify/functions/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    });
 
-  const data = await res.json();
-  document.getElementById("answer").innerHTML = 
-    (data.cached ? "(From history) " : "") + data.answer;
-});
+    const data = await res.json();
+
+    if (data.error) {
+      answerBox.innerHTML = "Error: " + data.error;
+    } else {
+      let sourceTag = "";
+      if (data.source === "database") {
+        sourceTag = " <span style='color: green;'>(From Database)</span>";
+      } else if (data.source === "gemini") {
+        sourceTag = " <span style='color: blue;'>(From Gemini)</span>";
+      }
+
+      answerBox.innerHTML = data.answer + sourceTag;
+    }
+  } catch (err) {
+    console.error(err);
+    answerBox.innerHTML = "Something went wrong.";
+  }
+}
