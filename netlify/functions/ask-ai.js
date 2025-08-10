@@ -1,7 +1,6 @@
-// netlify/functions/ask-ai.js
 import fetch from "node-fetch";
 
-let memory = {}; // in-memory storage for Q&A during function's warm life
+let memory = {};
 
 export async function handler(event) {
   try {
@@ -18,23 +17,22 @@ export async function handler(event) {
       };
     }
 
-    // Call Gemini API
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("Missing GEMINI_API_KEY in environment variables");
     }
 
+    // Call Gemini API
     const geminiRes = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [
             {
-              parts: [
-                { text: question }
-              ]
+              role: "user",
+              parts: [{ text: question }]
             }
           ]
         })
@@ -43,11 +41,13 @@ export async function handler(event) {
 
     const data = await geminiRes.json();
 
-    // Extract the answer safely
-    const answer =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't find an answer.";
+    // Log entire response to see the structure
+    console.log("Gemini API raw response:", JSON.stringify(data, null, 2));
 
-    // Save in memory
+    const answer =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Sorry, I couldn't find an answer.";
+
     memory[question] = answer;
 
     return {
