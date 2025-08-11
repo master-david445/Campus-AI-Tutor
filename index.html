@@ -1,18 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Campus AI Tutor</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Q&A Library</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #8B5FBF;
+      --secondary: #D4B5F7;
+      --accent: #F7E8FF;
+      --text: #2A1B3D;
+      --text-light: #6B5B73;
+      --bg: #FDFCFE;
+      --white: #FFFFFF;
+      --shadow: rgba(139, 95, 191, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ask-section {
+      background: var(--white);
+      border: 1px solid var(--secondary);
+      border-radius: 12px;
+      padding: 24px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .ask-section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    #question {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px;
+      border: 1px solid var(--secondary);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--accent);
+      resize: vertical;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    #question:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    #askBtn {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #askBtn:hover:not(:disabled) {
+      background: #7A4FB5;
+      transform: translateY(-1px);
+    }
+
+    #askBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .library-section {
+      background: var(--white);
+      border: 1px solid var(--secondary);
+      border-radius: 12px;
+      padding: 24px;
+      min-height: 400px;
+    }
+
+    .library-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 16px;
+    }
+
+    .library-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .search-box {
+      flex: 1;
+      max-width: 250px;
+      margin-left: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--secondary);
+      border-radius: 6px;
+      font-size: 13px;
+      background: var(--accent);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .stats {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .qa-list {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .qa-item {
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+
+    .qa-item:hover {
+      border-color: var(--secondary);
+      background: var(--accent);
+    }
+
+    .qa-question {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: between;
+      align-items: center;
+    }
+
+    .qa-question::after {
+      content: "📚";
+      font-size: 12px;
+    }
+
+    .qa-answer {
+      color: var(--text-light);
+      font-size: 13px;
+      line-height: 1.5;
+      padding-left: 12px;
+      border-left: 2px solid var(--secondary);
+    }
+
+    .qa-meta {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: right;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--text-light);
+      padding: 60px 20px;
+    }
+
+    .empty-state h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .loading {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--secondary);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .current-answer {
+      background: var(--accent);
+      border: 1px solid var(--secondary);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+      min-height: 60px;
+      font-size: 13px;
+    }
+
+    .current-answer.loading {
+      background: linear-gradient(90deg, var(--accent) 25%, var(--secondary) 50%, var(--accent) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--accent);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--secondary);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    .category-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 4px 10px;
+      font-size: 11px;
+      border: 1px solid var(--secondary);
+      background: var(--white);
+      color: var(--text-light);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+  </style>
 </head>
 <body>
-  <h1>Campus AI Tutor</h1>
-  <textarea id="question" placeholder="Ask me anything about your course..."></textarea>
-  <button id="askBtn">Ask</button>
-  <div id="answer"></div>
-   <div id="history"></div>
-  
-  <script src="script.js"></script>
+  <div class="container">
+    <header class="header">
+      <h1>📚 Campus Q&A Library</h1>
+      <p>Your collaborative knowledge base for academic success</p>
+    </header>
+
+    <div class="main-content">
+      <div class="ask-section">
+        <h2>Ask a Question</h2>
+        <textarea 
+          id="question" 
+          placeholder="What would you like to learn today?
+
+Examples:
+• How do I solve quadratic equations?
+• Explain photosynthesis process
+• What's the difference between mitosis and meiosis?"></textarea>
+        
+        <button id="askBtn">
+          <span class="btn-text">Ask Question</span>
+        </button>
+
+        <div class="current-answer" id="answer" style="display: none;">
+          Your answer will appear here...
+        </div>
+      </div>
+
+      <div class="library-section">
+        <div class="library-header">
+          <h2>Knowledge Library</h2>
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search questions...">
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span>📊</span>
+            <span>Total: <strong id="totalCount">0</strong></span>
+          </div>
+          <div class="stat-item">
+            <span>🕒</span>
+            <span id="lastUpdated">No questions yet</span>
+          </div>
+        </div>
+
+        <div class="category-filters">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="math">Math</button>
+          <button class="filter-btn" data-category="science">Science</button>
+          <button class="filter-btn" data-category="english">English</button>
+          <button class="filter-btn" data-category="history">History</button>
+          <button class="filter-btn" data-category="other">Other</button>
+        </div>
+
+        <div class="qa-list" id="qaList">
+          <div class="empty-state">
+            <h3>📖 Start Building Your Library</h3>
+            <p>Ask your first question to begin creating a personalized knowledge base for your studies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class CampusQALibrary {
+      constructor() {
+        this.questionInput = document.getElementById("question");
+        this.askBtn = document.getElementById("askBtn");
+        this.answerDiv = document.getElementById("answer");
+        this.qaList = document.getElementById("qaList");
+        this.searchInput = document.getElementById("searchInput");
+        this.totalCount = document.getElementById("totalCount");
+        this.lastUpdated = document.getElementById("lastUpdated");
+        
+        this.questions = [];
+        this.filteredQuestions = [];
+        this.currentCategory = 'all';
+        
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.loadQuestions();
+        this.updateStats();
+      }
+
+      setupEventListeners() {
+        this.askBtn.addEventListener("click", () => this.askQuestion());
+        
+        this.questionInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" && e.ctrlKey) {
+            this.askQuestion();
+          }
+        });
+
+        this.searchInput.addEventListener("input", (e) => {
+          this.filterQuestions(e.target.value);
+        });
+
+        // Category filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            this.currentCategory = e.target.dataset.category;
+            this.filterQuestions(this.searchInput.value);
+          });
+        });
+      }
+
+      async loadQuestions() {
+        try {
+          // Try to fetch from Supabase if available
+          const SUPABASE_URL = "YOUR_SUPABASE_URL";
+          const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+          
+          if (SUPABASE_URL !== "YOUR_SUPABASE_URL") {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/questions?select=*`, {
+              headers: {
+                apikey: SUPABASE_ANON_KEY,
+                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+              },
+            });
+            
+            if (response.ok) {
+              this.questions = await response.json();
+              this.questions = this.questions.map(q => ({
+                ...q,
+                timestamp: new Date(q.created_at || Date.now()),
+                category: this.categorizeQuestion(q.question)
+              }));
+            }
+          }
+        } catch (error) {
+          console.log("Using local storage fallback");
+        }
+        
+        this.filterQuestions();
+        this.updateStats();
+      }
+
+      async askQuestion() {
+        const question = this.questionInput.value.trim();
+        
+        if (!question) {
+          alert("Please enter a question");
+          return;
+        }
+
+        this.setLoading(true);
+        this.answerDiv.style.display = 'block';
+        
+        try {
+          // Call your Netlify function
+          const response = await fetch("/.netlify/functions/ask-ai", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+          
+          const data = await response.json();
+          
+          if (data.answer) {
+            const answer = data.answer;
+            
+            // Add to local array immediately for UI responsiveness
+            const newQuestion = {
+              id: Date.now(),
+              question,
+              answer,
+              timestamp: new Date(),
+              category: this.categorizeQuestion(question)
+            };
+            
+            this.questions.unshift(newQuestion);
+            this.showAnswer(answer);
+            this.questionInput.value = "";
+            this.filterQuestions();
+            this.updateStats();
+          } else {
+            this.showAnswer("Sorry, I could not find an answer.");
+          }
+          
+        } catch (error) {
+          this.showAnswer("Sorry, something went wrong. Please try again.");
+          console.error("Error:", error);
+        } finally {
+          this.setLoading(false);
+        }
+      }
+
+      categorizeQuestion(question) {
+        const q = question.toLowerCase();
+        if (q.includes('math') || q.includes('equation') || q.includes('algebra') || q.includes('calculus')) return 'math';
+        if (q.includes('science') || q.includes('physics') || q.includes('chemistry') || q.includes('biology')) return 'science';
+        if (q.includes('english') || q.includes('literature') || q.includes('essay') || q.includes('shakespeare')) return 'english';
+        if (q.includes('history') || q.includes('war') || q.includes('ancient') || q.includes('civilization')) return 'history';
+        return 'other';
+      }
+
+      setLoading(isLoading) {
+        const btnText = this.askBtn.querySelector('.btn-text');
+        
+        if (isLoading) {
+          this.askBtn.disabled = true;
+          btnText.innerHTML = '<span class="loading"></span>Processing...';
+          this.answerDiv.className = "current-answer loading";
+          this.answerDiv.textContent = "AI is thinking...";
+        } else {
+          this.askBtn.disabled = false;
+          btnText.textContent = "Ask Question";
+          this.answerDiv.className = "current-answer";
+        }
+      }
+
+      showAnswer(answer) {
+        this.answerDiv.textContent = answer;
+        this.answerDiv.className = "current-answer";
+      }
+
+      filterQuestions(searchTerm = '') {
+        let filtered = this.questions;
+        
+        // Filter by category
+        if (this.currentCategory !== 'all') {
+          filtered = filtered.filter(q => q.category === this.currentCategory);
+        }
+        
+        // Filter by search term
+        if (searchTerm) {
+          filtered = filtered.filter(q => 
+            q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            q.answer.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        
+        this.filteredQuestions = filtered;
+        this.renderQuestions();
+      }
+
+      renderQuestions() {
+        if (this.filteredQuestions.length === 0) {
+          this.qaList.innerHTML = `
+            <div class="empty-state">
+              <h3>📖 ${this.questions.length === 0 ? 'Start Building Your Library' : 'No matches found'}</h3>
+              <p>${this.questions.length === 0 ? 
+                'Ask your first question to begin creating a personalized knowledge base for your studies.' : 
+                'Try adjusting your search or category filter.'}</p>
+            </div>
+          `;
+          return;
+        }
+
+        this.qaList.innerHTML = this.filteredQuestions
+          .map(item => `
+            <div class="qa-item">
+              <div class="qa-question">${this.escapeHtml(item.question)}</div>
+              <div class="qa-answer">${this.escapeHtml(item.answer)}</div>
+              <div class="qa-meta">${this.formatTime(item.timestamp)} • ${item.category}</div>
+            </div>
+          `).join('');
+      }
+
+      updateStats() {
+        this.totalCount.textContent = this.questions.length;
+        if (this.questions.length > 0) {
+          const lastQuestion = this.questions[0];
+          this.lastUpdated.textContent = `Updated ${this.formatTime(lastQuestion.timestamp)}`;
+        }
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      formatTime(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (minutes < 1) return 'just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        return `${days}d ago`;
+      }
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', () => {
+      new CampusQALibrary();
+    });
+  </script>
 </body>
 </html>
