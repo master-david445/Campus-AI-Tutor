@@ -156,8 +156,8 @@ Contributors will be:
 ## 📞 Getting Help
 
 - 💬 Open a [Discussion](https://github.com/YOUR_USERNAME/campus-q-and-a-library/discussions)
-- 📧 Email: your-email@example.com
-- 🐦 Twitter: [@YourHandle](https://twitter.com/YourHandle)
+- 📧 Email: macaulaydavid88@gmail.com
+- 🐦 Twitter: [@YourHandle](https://x.com/DavidMacau87518)
 
 ## 📄 Code of Conduct
 
