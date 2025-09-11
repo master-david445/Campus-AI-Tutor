@@ -20,21 +20,1001 @@
       --bg: #FDFCFE;
       --white: #FFFFFF;
       --shadow: rgba(139, 95, 191, 0.1);
+      --success: #10B981;
+      --warning: #F59E0B;
+      --error: #EF4444;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
+      background: linear-gradient(135deg, var(--bg) 0%, #F8F4FF 100%);
       color: var(--text);
       line-height: 1.6;
       font-size: 14px;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 4px var(--shadow);
+    }
+
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .ask-section {
+      background: var(--white);
+      border: 1px solid var(--secondary);
+      border-radius: 16px;
+      padding: 28px;
+      position: sticky;
+      top: 20px;
+      box-shadow: 0 8px 32px var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .ask-section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ask-section h2::before {
+      content: "💭";
+      font-size: 18px;
+    }
+
+    #question {
+      width: 100%;
+      min-height: 120px;
+      padding: 16px;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: inherit;
+      background: var(--accent);
+      resize: vertical;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    #question:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    #question::placeholder {
+      color: var(--text-light);
+      opacity: 0.8;
+    }
+
+    .input-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .char-count {
+      opacity: 0.7;
+    }
+
+    .keyboard-hint {
+      opacity: 0.7;
+    }
+
+    #askBtn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      color: var(--white);
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #askBtn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    #askBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(139, 95, 191, 0.3);
+    }
+
+    #askBtn:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    #askBtn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .library-section {
+      background: var(--white);
+      border: 1px solid var(--secondary);
+      border-radius: 16px;
+      padding: 28px;
+      min-height: 500px;
+      box-shadow: 0 8px 32px var(--shadow);
+    }
+
+    .library-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 20px;
+    }
+
+    .library-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .library-header h2::before {
+      content: "📚";
+      font-size: 18px;
+    }
+
+    .search-box {
+      flex: 1;
+      max-width: 300px;
+      margin-left: 20px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 2px solid var(--accent);
+      border-radius: 24px;
+      font-size: 14px;
+      background: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+
+    .stats {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--accent);
+      border-radius: 20px;
+    }
+
+    .category-filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      border: 2px solid var(--secondary);
+      background: var(--white);
+      color: var(--text-light);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      color: var(--white);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .qa-list {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .qa-item {
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qa-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .qa-item:hover {
+      border-color: var(--secondary);
+      background: linear-gradient(135deg, var(--accent), rgba(247, 232, 255, 0.3));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .qa-item:hover::before {
+      transform: scaleX(1);
+    }
+
+    .qa-question {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .qa-question::after {
+      content: "💡";
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .qa-answer {
+      color: var(--text-light);
+      font-size: 13px;
+      line-height: 1.6;
+      padding-left: 16px;
+      border-left: 3px solid var(--secondary);
+      background: rgba(212, 181, 247, 0.1);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-left: -4px;
+    }
+
+    .qa-meta {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: right;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-tag {
+      background: var(--primary);
+      color: var(--white);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: var(--text-light);
+      padding: 80px 20px;
+    }
+
+    .empty-state h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .empty-state p {
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--secondary);
+      border-radius: 50%;
+      border-top-color: var(--white);
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .current-answer {
+      background: linear-gradient(135deg, var(--accent), rgba(247, 232, 255, 0.3));
+      border: 2px solid var(--secondary);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      min-height: 80px;
+      font-size: 14px;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .current-answer.loading {
+      background: linear-gradient(90deg, var(--accent) 25%, var(--secondary) 50%, var(--accent) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .answer-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: 1px solid var(--secondary);
+      background: var(--white);
+      color: var(--text-light);
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      font-size: 14px;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notification.success {
+      background: var(--success);
+    }
+
+    .notification.error {
+      background: var(--error);
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .quick-questions {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--accent);
+    }
+
+    .quick-questions h4 {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .quick-question {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border: 1px solid var(--accent);
+      background: var(--white);
+      color: var(--text-light);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .quick-question:hover {
+      background: var(--accent);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>📚 Campus Q&A Library</h1>
+      <p>Your collaborative knowledge base for academic success. Ask, learn, and build your personal study companion.</p>
+    </header>
+
+    <div class="main-content">
+      <div class="ask-section">
+        <h2>Ask a Question</h2>
+        <textarea 
+          id="question" 
+          placeholder="What would you like to learn today?
+
+Examples:
+• How do I solve quadratic equations step by step?
+• Explain the process of photosynthesis in detail
+• What's the difference between mitosis and meiosis?
+• Analyze the themes in Shakespeare's Romeo and Juliet"></textarea>
+        
+        <div class="input-footer">
+          <span class="char-count">
+            <span id="charCount">0</span>/500 characters
+          </span>
+          <span class="keyboard-hint">Ctrl + Enter to submit</span>
+        </div>
+
+        <button id="askBtn">
+          <span class="btn-text">✨ Ask Question</span>
+        </button>
+
+        <div class="current-answer" id="answer" style="display: none;">
+          <div class="answer-content">Your answer will appear here...</div>
+          <div class="answer-actions" style="display: none;">
+            <button class="action-btn" id="copyAnswer">📋 Copy</button>
+            <button class="action-btn" id="saveAnswer">💾 Save</button>
+          </div>
+        </div>
+
+        <div class="quick-questions">
+          <h4>Quick Start</h4>
+          <button class="quick-question" data-question="Explain the water cycle">🌊 Explain the water cycle</button>
+          <button class="quick-question" data-question="How to write a thesis statement">📝 How to write a thesis statement</button>
+          <button class="quick-question" data-question="What is the Pythagorean theorem">📐 What is the Pythagorean theorem</button>
+          <button class="quick-question" data-question="Explain World War 2 causes">🌍 Explain World War 2 causes</button>
+        </div>
+      </div>
+
+      <div class="library-section">
+        <div class="library-header">
+          <h2>Knowledge Library</h2>
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search your questions...">
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span>📊</span>
+            <span>Total: <strong id="totalCount">0</strong></span>
+          </div>
+          <div class="stat-item">
+            <span>🕒</span>
+            <span id="lastUpdated">No questions yet</span>
+          </div>
+          <div class="stat-item">
+            <span>📈</span>
+            <span>Today: <strong id="todayCount">0</strong></span>
+          </div>
+        </div>
+
+        <div class="category-filters">
+          <button class="filter-btn active" data-category="all">All Topics</button>
+          <button class="filter-btn" data-category="math">📊 Math</button>
+          <button class="filter-btn" data-category="science">🔬 Science</button>
+          <button class="filter-btn" data-category="english">📚 English</button>
+          <button class="filter-btn" data-category="history">🏛️ History</button>
+          <button class="filter-btn" data-category="other">🎯 Other</button>
+        </div>
+
+        <div class="qa-list" id="qaList">
+          <div class="empty-state">
+            <h3>🎓 Ready to Learn?</h3>
+            <p>Start building your personalized knowledge base! Ask your first question to create a study companion that grows with you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class CampusQALibrary {
+      constructor() {
+        this.questionInput = document.getElementById("question");
+        this.askBtn = document.getElementById("askBtn");
+        this.answerDiv = document.getElementById("answer");
+        this.qaList = document.getElementById("qaList");
+        this.searchInput = document.getElementById("searchInput");
+        this.totalCount = document.getElementById("totalCount");
+        this.lastUpdated = document.getElementById("lastUpdated");
+        this.todayCount = document.getElementById("todayCount");
+        this.charCount = document.getElementById("charCount");
+        
+        this.questions = this.loadFromStorage() || [];
+        this.filteredQuestions = [];
+        this.currentCategory = 'all';
+        
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.filterQuestions();
+        this.updateStats();
+        this.updateCharCount();
+      }
+
+      loadFromStorage() {
+        try {
+          const stored = localStorage.getItem('campusQALibrary');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            return parsed.map(q => ({
+              ...q,
+              timestamp: new Date(q.timestamp)
+            }));
+          }
+        } catch (error) {
+          console.error('Error loading from storage:', error);
+        }
+        return [];
+      }
+
+      saveToStorage() {
+        try {
+          localStorage.setItem('campusQALibrary', JSON.stringify(this.questions));
+        } catch (error) {
+          console.error('Error saving to storage:', error);
+        }
+      }
+
+      setupEventListeners() {
+        this.askBtn.addEventListener("click", () => this.askQuestion());
+        
+        this.questionInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter" && e.ctrlKey) {
+            this.askQuestion();
+          }
+        });
+
+        this.questionInput.addEventListener("input", () => {
+          this.updateCharCount();
+        });
+
+        this.searchInput.addEventListener("input", (e) => {
+          this.filterQuestions(e.target.value);
+        });
+
+        // Category filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            this.currentCategory = e.target.dataset.category;
+            this.filterQuestions(this.searchInput.value);
+          });
+        });
+
+        // Quick questions
+        document.querySelectorAll('.quick-question').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            this.questionInput.value = e.target.dataset.question;
+            this.updateCharCount();
+            this.questionInput.focus();
+          });
+        });
+
+        // Answer actions
+        document.getElementById('copyAnswer').addEventListener('click', () => {
+          this.copyToClipboard();
+        });
+
+        document.getElementById('saveAnswer').addEventListener('click', () => {
+          this.saveCurrentAnswer();
+        });
+      }
+
+      updateCharCount() {
+        const count = this.questionInput.value.length;
+        this.charCount.textContent = count;
+        
+        if (count > 450) {
+          this.charCount.style.color = 'var(--error)';
+        } else if (count > 400) {
+          this.charCount.style.color = 'var(--warning)';
+        } else {
+          this.charCount.style.color = 'var(--text-light)';
+        }
+      }
+
+      async askQuestion() {
+        const question = this.questionInput.value.trim();
+        
+        if (!question) {
+          this.showNotification("Please enter a question", "error");
+          return;
+        }
+
+        if (question.length > 500) {
+          this.showNotification("Question is too long (max 500 characters)", "error");
+          return;
+        }
+
+        this.setLoading(true);
+        this.answerDiv.style.display = 'block';
+        
+        try {
+          // Simulate AI response for demo
+          const answer = await this.getAIResponse(question);
+          
+          const newQuestion = {
+            id: Date.now(),
+            question,
+            answer,
+            timestamp: new Date(),
+            category: this.categorizeQuestion(question)
+          };
+          
+          this.questions.unshift(newQuestion);
+          this.saveToStorage();
+          this.showAnswer(answer);
+          this.questionInput.value = "";
+          this.updateCharCount();
+          this.filterQuestions();
+          this.updateStats();
+          this.showNotification("Question answered successfully!", "success");
+          
+        } catch (error) {
+          this.showAnswer("Sorry, something went wrong. Please try again.");
+          this.showNotification("Error processing question", "error");
+          console.error("Error:", error);
+        } finally {
+          this.setLoading(false);
+        }
+      }
+
+      async getAIResponse(question) {
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
+        
+        // Simple mock responses based on question content
+        const q = question.toLowerCase();
+        
+        if (q.includes('water cycle') || q.includes('evaporation')) {
+          return "The water cycle is the continuous movement of water on, above, and below Earth's surface. It involves evaporation from water bodies, condensation in clouds, and precipitation back to Earth. This process is driven by solar energy and gravity, creating a closed system that recycles water through different states and locations.";
+        }
+        
+        if (q.includes('thesis') || q.includes('statement')) {
+          return "A thesis statement is a concise summary of the main point or claim of an essay. It should be specific, arguable, and appear in your introduction. A strong thesis statement typically includes your topic and your position on that topic. For example: 'Social media negatively impacts teenage mental health by increasing anxiety and reducing face-to-face social skills.'";
+        }
+        
+        if (q.includes('pythagorean') || q.includes('theorem')) {
+          return "The Pythagorean theorem states that in a right triangle, the square of the hypotenuse (c) equals the sum of squares of the other two sides (a and b): a² + b² = c². This fundamental principle is used in geometry, engineering, and many real-world applications involving distance calculations and right-angle measurements.";
+        }
+        
+        if (q.includes('photosynthesis')) {
+          return "Photosynthesis is the process by which plants convert light energy into chemical energy (glucose). The equation is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂. This occurs in chloroplasts using chlorophyll to capture sunlight. The process involves light-dependent reactions (producing ATP and NADPH) and light-independent reactions (Calvin cycle) that fix carbon dioxide into glucose.";
+        }
+        
+        // Generic educational response
+        return `Thank you for your question about "${question}". This is an interesting topic that requires careful analysis. I'd recommend breaking down the key concepts, examining the relationships between different elements, and considering real-world applications. For more detailed information, you might want to consult academic sources or speak with your instructor for personalized guidance.`;
+      }
+
+      categorizeQuestion(question) {
+        const q = question.toLowerCase();
+        
+        const categories = {
+          math: ['math', 'equation', 'algebra', 'calculus', 'geometry', 'theorem', 'calculate', 'formula', 'solve'],
+          science: ['science', 'physics', 'chemistry', 'biology', 'photosynthesis', 'cell', 'atom', 'molecule', 'reaction', 'evolution'],
+          english: ['english', 'literature', 'essay', 'shakespeare', 'writing', 'thesis', 'grammar', 'poem', 'novel', 'analysis'],
+          history: ['history', 'war', 'ancient', 'civilization', 'revolution', 'century', 'historical', 'empire', 'battle', 'timeline']
+        };
+        
+        for (const [category, keywords] of Object.entries(categories)) {
+          if (keywords.some(keyword => q.includes(keyword))) {
+            return category;
+          }
+        }
+        
+        return 'other';
+      }
+
+      setLoading(isLoading) {
+        const btnText = this.askBtn.querySelector('.btn-text');
+        
+        if (isLoading) {
+          this.askBtn.disabled = true;
+          btnText.innerHTML = '<span class="loading"></span>AI is thinking...';
+          this.answerDiv.className = "current-answer loading";
+          this.answerDiv.querySelector('.answer-content').textContent = "Processing your question...";
+        } else {
+          this.askBtn.disabled = false;
+          btnText.innerHTML = '✨ Ask Question';
+          this.answerDiv.className = "current-answer";
+        }
+      }
+
+      showAnswer(answer) {
+        this.answerDiv.querySelector('.answer-content').textContent = answer;
+        this.answerDiv.querySelector('.answer-actions').style.display = 'flex';
+        this.currentAnswer = answer;
+      }
+
+      filterQuestions(searchTerm = '') {
+        let filtered = this.questions;
+        
+        if (this.currentCategory !== 'all') {
+          filtered = filtered.filter(q => q.category === this.currentCategory);
+        }
+        
+        if (searchTerm) {
+          filtered = filtered.filter(q => 
+            q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            q.answer.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        
+        this.filteredQuestions = filtered;
+        this.renderQuestions();
+      }
+
+      renderQuestions() {
+        if (this.filteredQuestions.length === 0) {
+          this.qaList.innerHTML = `
+            <div class="empty-state">
+              <h3>🎓 ${this.questions.length === 0 ? 'Ready to Learn?' : 'No matches found'}</h3>
+              <p>${this.questions.length === 0 ? 
+                'Start building your personalized knowledge base! Ask your first question to create a study companion that grows with you.' : 
+                'Try adjusting your search terms or category filter to find what you\'re looking for.'}</p>
+            </div>
+          `;
+          return;
+        }
+
+        this.qaList.innerHTML = this.filteredQuestions
+          .map(item => `
+            <div class="qa-item" data-id="${item.id}">
+              <div class="qa-question">${this.escapeHtml(item.question)}</div>
+              <div class="qa-answer">${this.escapeHtml(item.answer)}</div>
+              <div class="qa-meta">
+                <span class="category-tag">${this.getCategoryIcon(item.category)} ${item.category}</span>
+                <span>${this.formatTime(item.timestamp)}</span>
+              </div>
+            </div>
+          `).join('');
+      }
+
+      getCategoryIcon(category) {
+        const icons = {
+          math: '📊',
+          science: '🔬',
+          english: '📚',
+          history: '🏛️',
+          other: '🎯'
+        };
+        return icons[category] || '🎯';
+      }
+
+      updateStats() {
+        this.totalCount.textContent = this.questions.length;
+        
+        // Count today's questions
+        const today = new Date();
+        const todayQuestions = this.questions.filter(q => {
+          const qDate = new Date(q.timestamp);
+          return qDate.toDateString() === today.toDateString();
+        });
+        this.todayCount.textContent = todayQuestions.length;
+        
+        if (this.questions.length > 0) {
+          const lastQuestion = this.questions[0];
+          this.lastUpdated.textContent = `Updated ${this.formatTime(lastQuestion.timestamp)}`;
+        } else {
+          this.lastUpdated.textContent = 'No questions yet';
+        }
+      }
+
+      copyToClipboard() {
+        if (this.currentAnswer) {
+          navigator.clipboard.writeText(this.currentAnswer).then(() => {
+            this.showNotification("Answer copied to clipboard!", "success");
+          }).catch(() => {
+            this.showNotification("Could not copy to clipboard", "error");
+          });
+        }
+      }
+
+      saveCurrentAnswer() {
+        // This would typically save to a favorites list or export
+        this.showNotification("Answer saved to your library!", "success");
+      }
+
+      showNotification(message, type) {
+        // Remove existing notifications
+        document.querySelectorAll('.notification').forEach(n => n.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => notification.classList.add('show'), 100);
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      formatTime(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (minutes < 1) return 'just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        if (days === 1) return 'yesterday';
+        if (days < 7) return `${days}d ago`;
+        return date.toLocaleDateString();
+      }
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', () => {
+      new CampusQALibrary();
+    });
+  </script>
+</body>
+</html>    }
 
     .header {
       text-align: center;
