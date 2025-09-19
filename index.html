@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,22 +12,24 @@
     }
 
     :root {
-      --primary: #8B5FBF;
-      --secondary: #D4B5F7;
-      --accent: #F7E8FF;
-      --text: #2A1B3D;
-      --text-light: #6B5B73;
-      --bg: #FDFCFE;
+      --primary: #2563EB;
+      --secondary: #60A5FA;
+      --accent: #DBEAFE;
+      --text: #1E293B;
+      --text-light: #64748B;
+      --bg: #F8FAFC;
       --white: #FFFFFF;
-      --shadow: rgba(139, 95, 191, 0.1);
+      --shadow: rgba(37, 99, 235, 0.1);
       --success: #10B981;
       --warning: #F59E0B;
       --error: #EF4444;
+      --dark-blue: #1E40AF;
+      --light-blue: #EFF6FF;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, var(--bg) 0%, #F8F4FF 100%);
+      background: linear-gradient(135deg, var(--bg) 0%, var(--light-blue) 100%);
       color: var(--text);
       line-height: 1.6;
       font-size: 14px;
@@ -35,51 +37,52 @@
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 24px;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
       position: relative;
     }
 
     .header::before {
       content: '';
       position: absolute;
-      top: -20px;
+      top: -24px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
+      width: 120px;
       height: 4px;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       border-radius: 2px;
     }
 
     .header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--dark-blue));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       text-shadow: 0 2px 4px var(--shadow);
     }
 
     .header p {
       color: var(--text-light);
-      font-size: 16px;
-      max-width: 500px;
+      font-size: 18px;
+      max-width: 600px;
       margin: 0 auto;
+      font-weight: 400;
     }
 
     .main-content {
       display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 30px;
+      grid-template-columns: 450px 1fr;
+      gap: 36px;
       align-items: start;
     }
 
@@ -89,48 +92,53 @@
       }
       
       .header h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+      }
+      
+      .container {
+        padding: 16px;
       }
     }
 
     .ask-section {
       background: var(--white);
-      border: 1px solid var(--secondary);
-      border-radius: 16px;
-      padding: 28px;
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      padding: 32px;
       position: sticky;
-      top: 20px;
-      box-shadow: 0 8px 32px var(--shadow);
+      top: 24px;
+      box-shadow: 0 12px 40px var(--shadow);
       backdrop-filter: blur(10px);
     }
 
     .ask-section h2 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .ask-section h2::before {
-      content: "💭";
-      font-size: 18px;
+      content: "🎯";
+      font-size: 20px;
     }
 
     #question {
       width: 100%;
-      min-height: 120px;
-      padding: 16px;
+      min-height: 140px;
+      padding: 20px;
       border: 2px solid var(--accent);
-      border-radius: 12px;
-      font-size: 14px;
+      border-radius: 16px;
+      font-size: 15px;
       font-family: inherit;
-      background: var(--accent);
+      background: var(--light-blue);
       resize: vertical;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       transition: all 0.3s ease;
+      line-height: 1.5;
     }
 
     #question:focus {
@@ -138,7 +146,7 @@
       border-color: var(--primary);
       background: var(--white);
       transform: translateY(-2px);
-      box-shadow: 0 4px 20px var(--shadow);
+      box-shadow: 0 8px 32px var(--shadow);
     }
 
     #question::placeholder {
@@ -150,13 +158,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      font-size: 12px;
+      margin-bottom: 24px;
+      font-size: 13px;
       color: var(--text-light);
     }
 
     .char-count {
-      opacity: 0.7;
+      opacity: 0.8;
+      font-weight: 500;
     }
 
     .keyboard-hint {
@@ -165,17 +174,19 @@
 
     #askBtn {
       width: 100%;
-      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      background: linear-gradient(135deg, var(--primary), var(--dark-blue));
       color: var(--white);
       border: none;
-      padding: 14px 20px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
+      padding: 18px 24px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     #askBtn::before {
@@ -186,12 +197,12 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      transition: left 0.6s;
     }
 
     #askBtn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(139, 95, 191, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(37, 99, 235, 0.4);
     }
 
     #askBtn:hover:not(:disabled)::before {
@@ -204,62 +215,85 @@
       transform: none;
     }
 
+    .connection-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .connection-status.online {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .connection-status.offline {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
     .library-section {
       background: var(--white);
-      border: 1px solid var(--secondary);
-      border-radius: 16px;
-      padding: 28px;
-      min-height: 500px;
-      box-shadow: 0 8px 32px var(--shadow);
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      padding: 32px;
+      min-height: 600px;
+      box-shadow: 0 12px 40px var(--shadow);
     }
 
     .library-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       border-bottom: 2px solid var(--accent);
-      padding-bottom: 20px;
+      padding-bottom: 24px;
     }
 
     .library-header h2 {
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 700;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .library-header h2::before {
-      content: "📚";
-      font-size: 18px;
+      content: "📖";
+      font-size: 20px;
     }
 
     .search-box {
       flex: 1;
-      max-width: 300px;
-      margin-left: 20px;
+      max-width: 350px;
+      margin-left: 24px;
       position: relative;
     }
 
     .search-box input {
       width: 100%;
-      padding: 10px 16px 10px 40px;
+      padding: 14px 20px 14px 48px;
       border: 2px solid var(--accent);
-      border-radius: 24px;
-      font-size: 14px;
-      background: var(--accent);
+      border-radius: 28px;
+      font-size: 15px;
+      background: var(--light-blue);
       transition: all 0.3s ease;
     }
 
     .search-box::before {
       content: "🔍";
       position: absolute;
-      left: 12px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 14px;
+      font-size: 16px;
       opacity: 0.6;
     }
 
@@ -267,72 +301,77 @@
       outline: none;
       border-color: var(--primary);
       background: var(--white);
-      box-shadow: 0 2px 12px var(--shadow);
+      box-shadow: 0 4px 20px var(--shadow);
     }
 
     .stats {
       display: flex;
       gap: 24px;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-light);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
     .stat-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: var(--accent);
-      border-radius: 20px;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--light-blue);
+      border: 1px solid var(--accent);
+      border-radius: 24px;
+      font-weight: 500;
     }
 
     .category-filters {
       display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin-bottom: 28px;
       flex-wrap: wrap;
     }
 
     .filter-btn {
-      padding: 8px 16px;
-      font-size: 12px;
+      padding: 10px 20px;
+      font-size: 13px;
       border: 2px solid var(--secondary);
       background: var(--white);
       color: var(--text-light);
-      border-radius: 20px;
+      border-radius: 24px;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-weight: 500;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .filter-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px var(--shadow);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px var(--shadow);
     }
 
     .filter-btn.active {
-      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      background: linear-gradient(135deg, var(--primary), var(--dark-blue));
       color: var(--white);
       border-color: var(--primary);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .qa-list {
-      max-height: 600px;
+      max-height: 700px;
       overflow-y: auto;
-      padding-right: 6px;
+      padding-right: 8px;
     }
 
     .qa-item {
       border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      background: var(--white);
     }
 
     .qa-item::before {
@@ -341,7 +380,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
+      height: 4px;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       transform: scaleX(0);
       transition: transform 0.3s ease;
@@ -349,9 +388,9 @@
 
     .qa-item:hover {
       border-color: var(--secondary);
-      background: linear-gradient(135deg, var(--accent), rgba(247, 232, 255, 0.3));
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px var(--shadow);
+      background: linear-gradient(135deg, var(--light-blue), rgba(219, 234, 254, 0.5));
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px var(--shadow);
     }
 
     .qa-item:hover::before {
@@ -359,38 +398,40 @@
     }
 
     .qa-question {
-      font-weight: 600;
-      margin-bottom: 12px;
+      font-weight: 700;
+      margin-bottom: 16px;
       color: var(--text);
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
+      gap: 16px;
+      font-size: 15px;
+      line-height: 1.4;
     }
 
     .qa-question::after {
       content: "💡";
-      font-size: 14px;
+      font-size: 16px;
       flex-shrink: 0;
       margin-top: 2px;
     }
 
     .qa-answer {
       color: var(--text-light);
-      font-size: 13px;
-      line-height: 1.6;
-      padding-left: 16px;
-      border-left: 3px solid var(--secondary);
-      background: rgba(212, 181, 247, 0.1);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      line-height: 1.7;
+      padding-left: 20px;
+      border-left: 4px solid var(--secondary);
+      background: rgba(96, 165, 250, 0.1);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
       margin-left: -4px;
     }
 
     .qa-meta {
-      margin-top: 12px;
-      font-size: 11px;
+      margin-top: 16px;
+      font-size: 12px;
       color: var(--text-light);
       text-align: right;
       display: flex;
@@ -401,39 +442,43 @@
     .category-tag {
       background: var(--primary);
       color: var(--white);
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-size: 10px;
-      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .empty-state {
       text-align: center;
       color: var(--text-light);
-      padding: 80px 20px;
+      padding: 100px 24px;
     }
 
     .empty-state h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
+      font-size: 20px;
+      margin-bottom: 16px;
       color: var(--text);
+      font-weight: 700;
     }
 
     .empty-state p {
-      max-width: 400px;
+      max-width: 450px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 15px;
     }
 
     .loading {
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border: 2px solid var(--secondary);
       border-radius: 50%;
       border-top-color: var(--white);
       animation: spin 1s linear infinite;
-      margin-right: 8px;
+      margin-right: 10px;
     }
 
     @keyframes spin {
@@ -441,19 +486,19 @@
     }
 
     .current-answer {
-      background: linear-gradient(135deg, var(--accent), rgba(247, 232, 255, 0.3));
+      background: linear-gradient(135deg, var(--light-blue), rgba(219, 234, 254, 0.5));
       border: 2px solid var(--secondary);
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      min-height: 80px;
-      font-size: 14px;
-      line-height: 1.6;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 24px;
+      min-height: 100px;
+      font-size: 15px;
+      line-height: 1.7;
       position: relative;
     }
 
     .current-answer.loading {
-      background: linear-gradient(90deg, var(--accent) 25%, var(--secondary) 50%, var(--accent) 75%);
+      background: linear-gradient(90deg, var(--light-blue) 25%, var(--secondary) 50%, var(--light-blue) 75%);
       background-size: 200% 100%;
       animation: shimmer 2s infinite;
     }
@@ -464,58 +509,63 @@
     }
 
     .answer-actions {
-      margin-top: 16px;
+      margin-top: 20px;
       display: flex;
-      gap: 8px;
+      gap: 12px;
       justify-content: flex-end;
     }
 
     .action-btn {
-      padding: 6px 12px;
+      padding: 8px 16px;
       border: 1px solid var(--secondary);
       background: var(--white);
       color: var(--text-light);
-      border-radius: 16px;
+      border-radius: 20px;
       cursor: pointer;
-      font-size: 11px;
-      transition: all 0.2s;
+      font-size: 12px;
+      transition: all 0.3s;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .action-btn:hover {
       background: var(--primary);
       color: var(--white);
+      transform: translateY(-1px);
     }
 
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 10px;
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--accent);
-      border-radius: 4px;
+      background: var(--light-blue);
+      border-radius: 6px;
     }
 
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(135deg, var(--secondary), var(--primary));
-      border-radius: 4px;
+      border-radius: 6px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, var(--primary), #9D6FD1);
+      background: linear-gradient(135deg, var(--primary), var(--dark-blue));
     }
 
     .notification {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 8px;
+      top: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      border-radius: 12px;
       color: white;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 14px;
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
+      transform: translateX(450px);
+      transition: transform 0.4s ease;
       z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 
     .notification.success {
@@ -531,45 +581,66 @@
     }
 
     .quick-questions {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--accent);
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid var(--accent);
     }
 
     .quick-questions h4 {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-light);
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      font-weight: 700;
     }
 
     .quick-question {
       display: block;
       width: 100%;
       text-align: left;
-      padding: 8px 12px;
-      margin-bottom: 4px;
-      border: 1px solid var(--accent);
+      padding: 12px 16px;
+      margin-bottom: 6px;
+      border: 2px solid var(--accent);
       background: var(--white);
       color: var(--text-light);
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 12px;
-      transition: all 0.2s;
+      font-size: 13px;
+      transition: all 0.3s;
+      font-weight: 500;
     }
 
     .quick-question:hover {
-      background: var(--accent);
+      background: var(--light-blue);
       color: var(--text);
+      border-color: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .refresh-btn {
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s;
+      margin-left: 12px;
+    }
+
+    .refresh-btn:hover {
+      background: var(--primary);
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <h1>📚 Campus Q&A Library</h1>
-      <p>Your collaborative knowledge base for academic success. Ask, learn, and build your personal study companion.</p>
+      <h1>🎓 Campus Q&A Library</h1>
+      <p>Your AI-powered academic companion. Ask questions, get intelligent answers, and build your personalized knowledge base.</p>
     </header>
 
     <div class="main-content">
@@ -583,7 +654,8 @@ Examples:
 • How do I solve quadratic equations step by step?
 • Explain the process of photosynthesis in detail
 • What's the difference between mitosis and meiosis?
-• Analyze the themes in Shakespeare's Romeo and Juliet"></textarea>
+• Analyze the themes in Shakespeare's Romeo and Juliet
+• What are the causes of World War II?"></textarea>
         
         <div class="input-footer">
           <span class="char-count">
@@ -593,8 +665,13 @@ Examples:
         </div>
 
         <button id="askBtn">
-          <span class="btn-text">✨ Ask Question</span>
+          <span class="btn-text">🚀 Ask AI Tutor</span>
         </button>
+
+        <div class="connection-status" id="connectionStatus">
+          <span>🔗</span>
+          <span id="statusText">Checking connection...</span>
+        </div>
 
         <div class="current-answer" id="answer" style="display: none;">
           <div class="answer-content">Your answer will appear here...</div>
@@ -606,10 +683,10 @@ Examples:
 
         <div class="quick-questions">
           <h4>Quick Start</h4>
-          <button class="quick-question" data-question="Explain the water cycle">🌊 Explain the water cycle</button>
-          <button class="quick-question" data-question="How to write a thesis statement">📝 How to write a thesis statement</button>
-          <button class="quick-question" data-question="What is the Pythagorean theorem">📐 What is the Pythagorean theorem</button>
-          <button class="quick-question" data-question="Explain World War 2 causes">🌍 Explain World War 2 causes</button>
+          <button class="quick-question" data-question="Explain the water cycle in detail">🌊 Explain the water cycle in detail</button>
+          <button class="quick-question" data-question="How do I write a strong thesis statement?">📝 How do I write a strong thesis statement?</button>
+          <button class="quick-question" data-question="What is the Pythagorean theorem and how is it used?">📐 What is the Pythagorean theorem and how is it used?</button>
+          <button class="quick-question" data-question="Explain the main causes of World War 2">🌍 Explain the main causes of World War 2</button>
         </div>
       </div>
 
@@ -619,6 +696,7 @@ Examples:
           <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search your questions...">
           </div>
+          <button class="refresh-btn" id="refreshBtn" title="Refresh from database">🔄</button>
         </div>
 
         <div class="stats">
@@ -628,7 +706,7 @@ Examples:
           </div>
           <div class="stat-item">
             <span>🕒</span>
-            <span id="lastUpdated">No questions yet</span>
+            <span id="lastUpdated">Loading...</span>
           </div>
           <div class="stat-item">
             <span>📈</span>
@@ -648,7 +726,7 @@ Examples:
         <div class="qa-list" id="qaList">
           <div class="empty-state">
             <h3>🎓 Ready to Learn?</h3>
-            <p>Start building your personalized knowledge base! Ask your first question to create a study companion that grows with you.</p>
+            <p>Connect to our AI tutor and start building your personalized knowledge base! Your questions and answers will be saved for future reference.</p>
           </div>
         </div>
       </div>
@@ -667,22 +745,79 @@ Examples:
         this.lastUpdated = document.getElementById("lastUpdated");
         this.todayCount = document.getElementById("todayCount");
         this.charCount = document.getElementById("charCount");
+        this.connectionStatus = document.getElementById("connectionStatus");
+        this.statusText = document.getElementById("statusText");
+        this.refreshBtn = document.getElementById("refreshBtn");
         
-        this.questions = this.loadFromStorage() || [];
+        this.questions = [];
         this.filteredQuestions = [];
         this.currentCategory = 'all';
+        this.isOnline = false;
         
         this.init();
       }
 
-      init() {
+      async init() {
         this.setupEventListeners();
+        this.updateCharCount();
+        await this.checkConnection();
+        await this.loadQuestionsFromDatabase();
         this.filterQuestions();
         this.updateStats();
-        this.updateCharCount();
       }
 
-      loadFromStorage() {
+      async checkConnection() {
+        try {
+          // Test connection to your Netlify function
+          const response = await fetch('/.netlify/functions/ask-ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: 'test' })
+          });
+          
+          this.isOnline = response.ok || response.status === 400; // 400 is expected for empty question
+          
+        } catch (error) {
+          console.error('Connection test failed:', error);
+          this.isOnline = false;
+        }
+        
+        this.updateConnectionStatus();
+      }
+
+      updateConnectionStatus() {
+        if (this.isOnline) {
+          this.connectionStatus.className = 'connection-status online';
+          this.statusText.textContent = 'Connected to AI Tutor';
+        } else {
+          this.connectionStatus.className = 'connection-status offline';
+          this.statusText.textContent = 'Offline - Check connection';
+        }
+      }
+
+      async loadQuestionsFromDatabase() {
+        try {
+          // Create a new Netlify function to fetch questions
+          const response = await fetch('/.netlify/functions/get-questions');
+          
+          if (response.ok) {
+            const data = await response.json();
+            this.questions = data.questions.map(q => ({
+              ...q,
+              timestamp: new Date(q.created_at || q.timestamp),
+              category: q.category || this.categorizeQuestion(q.question)
+            }));
+          } else {
+            console.error('Failed to load questions from database');
+            this.questions = this.loadFromLocalStorage() || [];
+          }
+        } catch (error) {
+          console.error('Error loading questions:', error);
+          this.questions = this.loadFromLocalStorage() || [];
+        }
+      }
+
+      loadFromLocalStorage() {
         try {
           const stored = localStorage.getItem('campusQALibrary');
           if (stored) {
@@ -693,16 +828,16 @@ Examples:
             }));
           }
         } catch (error) {
-          console.error('Error loading from storage:', error);
+          console.error('Error loading from localStorage:', error);
         }
         return [];
       }
 
-      saveToStorage() {
+      saveToLocalStorage() {
         try {
           localStorage.setItem('campusQALibrary', JSON.stringify(this.questions));
         } catch (error) {
-          console.error('Error saving to storage:', error);
+          console.error('Error saving to localStorage:', error);
         }
       }
 
@@ -721,6 +856,17 @@ Examples:
 
         this.searchInput.addEventListener("input", (e) => {
           this.filterQuestions(e.target.value);
+        });
+
+        this.refreshBtn.addEventListener("click", async () => {
+          this.refreshBtn.style.transform = 'rotate(360deg)';
+          await this.loadQuestionsFromDatabase();
+          this.filterQuestions();
+          this.updateStats();
+          setTimeout(() => {
+            this.refreshBtn.style.transform = 'rotate(0deg)';
+          }, 500);
+          this.showNotification("Library refreshed!", "success");
         });
 
         // Category filters
@@ -778,13 +924,36 @@ Examples:
           return;
         }
 
+        if (!this.isOnline) {
+          this.showNotification("No connection to AI Tutor. Please check your internet connection.", "error");
+          return;
+        }
+
         this.setLoading(true);
         this.answerDiv.style.display = 'block';
         
         try {
-          // Simulate AI response for demo
-          const answer = await this.getAIResponse(question);
+          // Call your Netlify function
+          const response = await fetch('/.netlify/functions/ask-ai', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question })
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const answer = data.answer;
           
+          if (!answer) {
+            throw new Error('No answer received from AI');
+          }
+
+          // Create new question object
           const newQuestion = {
             id: Date.now(),
             question,
@@ -793,8 +962,11 @@ Examples:
             category: this.categorizeQuestion(question)
           };
           
+          // Add to local array and save to localStorage as backup
           this.questions.unshift(newQuestion);
-          this.saveToStorage();
+          this.saveToLocalStorage();
+          
+          // Show answer and update UI
           this.showAnswer(answer);
           this.questionInput.value = "";
           this.updateCharCount();
@@ -803,49 +975,22 @@ Examples:
           this.showNotification("Question answered successfully!", "success");
           
         } catch (error) {
-          this.showAnswer("Sorry, something went wrong. Please try again.");
-          this.showNotification("Error processing question", "error");
-          console.error("Error:", error);
+          console.error("Error asking question:", error);
+          this.showAnswer("Sorry, I'm having trouble connecting to the AI tutor. Please try again in a moment.");
+          this.showNotification("Error processing question. Please try again.", "error");
         } finally {
           this.setLoading(false);
         }
-      }
-
-      async getAIResponse(question) {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
-        
-        // Simple mock responses based on question content
-        const q = question.toLowerCase();
-        
-        if (q.includes('water cycle') || q.includes('evaporation')) {
-          return "The water cycle is the continuous movement of water on, above, and below Earth's surface. It involves evaporation from water bodies, condensation in clouds, and precipitation back to Earth. This process is driven by solar energy and gravity, creating a closed system that recycles water through different states and locations.";
-        }
-        
-        if (q.includes('thesis') || q.includes('statement')) {
-          return "A thesis statement is a concise summary of the main point or claim of an essay. It should be specific, arguable, and appear in your introduction. A strong thesis statement typically includes your topic and your position on that topic. For example: 'Social media negatively impacts teenage mental health by increasing anxiety and reducing face-to-face social skills.'";
-        }
-        
-        if (q.includes('pythagorean') || q.includes('theorem')) {
-          return "The Pythagorean theorem states that in a right triangle, the square of the hypotenuse (c) equals the sum of squares of the other two sides (a and b): a² + b² = c². This fundamental principle is used in geometry, engineering, and many real-world applications involving distance calculations and right-angle measurements.";
-        }
-        
-        if (q.includes('photosynthesis')) {
-          return "Photosynthesis is the process by which plants convert light energy into chemical energy (glucose). The equation is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂. This occurs in chloroplasts using chlorophyll to capture sunlight. The process involves light-dependent reactions (producing ATP and NADPH) and light-independent reactions (Calvin cycle) that fix carbon dioxide into glucose.";
-        }
-        
-        // Generic educational response
-        return `Thank you for your question about "${question}". This is an interesting topic that requires careful analysis. I'd recommend breaking down the key concepts, examining the relationships between different elements, and considering real-world applications. For more detailed information, you might want to consult academic sources or speak with your instructor for personalized guidance.`;
       }
 
       categorizeQuestion(question) {
         const q = question.toLowerCase();
         
         const categories = {
-          math: ['math', 'equation', 'algebra', 'calculus', 'geometry', 'theorem', 'calculate', 'formula', 'solve'],
-          science: ['science', 'physics', 'chemistry', 'biology', 'photosynthesis', 'cell', 'atom', 'molecule', 'reaction', 'evolution'],
-          english: ['english', 'literature', 'essay', 'shakespeare', 'writing', 'thesis', 'grammar', 'poem', 'novel', 'analysis'],
-          history: ['history', 'war', 'ancient', 'civilization', 'revolution', 'century', 'historical', 'empire', 'battle', 'timeline']
+          math: ['math', 'equation', 'algebra', 'calculus', 'geometry', 'theorem', 'calculate', 'formula', 'solve', 'integral', 'derivative', 'quadratic', 'linear', 'trigonometry', 'statistics', 'probability'],
+          science: ['science', 'physics', 'chemistry', 'biology', 'photosynthesis', 'cell', 'atom', 'molecule', 'reaction', 'evolution', 'DNA', 'ecosystem', 'gravity', 'energy', 'matter', 'organism'],
+          english: ['english', 'literature', 'essay', 'shakespeare', 'writing', 'thesis', 'grammar', 'poem', 'novel', 'analysis', 'metaphor', 'symbolism', 'character', 'theme', 'rhetoric'],
+          history: ['history', 'war', 'ancient', 'civilization', 'revolution', 'century', 'historical', 'empire', 'battle', 'timeline', 'democracy', 'politics', 'culture', 'society']
         };
         
         for (const [category, keywords] of Object.entries(categories)) {
@@ -862,12 +1007,12 @@ Examples:
         
         if (isLoading) {
           this.askBtn.disabled = true;
-          btnText.innerHTML = '<span class="loading"></span>AI is thinking...';
+          btnText.innerHTML = '<span class="loading"></span>AI Tutor is thinking...';
           this.answerDiv.className = "current-answer loading";
-          this.answerDiv.querySelector('.answer-content').textContent = "Processing your question...";
+          this.answerDiv.querySelector('.answer-content').textContent = "Processing your question with AI...";
         } else {
           this.askBtn.disabled = false;
-          btnText.innerHTML = '✨ Ask Question';
+          btnText.innerHTML = '🚀 Ask AI Tutor';
           this.answerDiv.className = "current-answer";
         }
       }
@@ -902,7 +1047,7 @@ Examples:
             <div class="empty-state">
               <h3>🎓 ${this.questions.length === 0 ? 'Ready to Learn?' : 'No matches found'}</h3>
               <p>${this.questions.length === 0 ? 
-                'Start building your personalized knowledge base! Ask your first question to create a study companion that grows with you.' : 
+                'Connect to our AI tutor and start building your personalized knowledge base! Your questions and answers will be saved for future reference.' : 
                 'Try adjusting your search terms or category filter to find what you\'re looking for.'}</p>
             </div>
           `;
@@ -963,7 +1108,7 @@ Examples:
       }
 
       saveCurrentAnswer() {
-        // This would typically save to a favorites list or export
+        // This feature is already handled by the database save in askQuestion
         this.showNotification("Answer saved to your library!", "success");
       }
 
@@ -979,11 +1124,11 @@ Examples:
         // Show notification
         setTimeout(() => notification.classList.add('show'), 100);
         
-        // Hide after 3 seconds
+        // Hide after 4 seconds
         setTimeout(() => {
           notification.classList.remove('show');
-          setTimeout(() => notification.remove(), 300);
-        }, 3000);
+          setTimeout(() => notification.remove(), 400);
+        }, 4000);
       }
 
       escapeHtml(text) {
@@ -1014,4 +1159,4 @@ Examples:
     });
   </script>
 </body>
-</html>       
+</html>
